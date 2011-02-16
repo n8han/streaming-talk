@@ -3,7 +3,7 @@
 div#ticker {
     position: absolute;
     font-size: .4em;
-    bottom: .25em;
+    top: .25em;
     left: 2000px;
     text-align: right;
     color: gray;
