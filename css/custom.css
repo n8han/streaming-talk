@@ -1,0 +1,20 @@
+/* custom styles */
+
+div#ticker {
+    position: absolute;
+    font-size: .4em;
+    bottom: .25em;
+    left: 2000px;
+    text-align: right;
+    color: gray;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+div#ticker span {
+    margin-left: 2em;
+}
+
+body {
+    overflow: hidden;
+}
