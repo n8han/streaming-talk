@@ -23,3 +23,7 @@ Stream of Consciousness
 !SLIDE
 
 ![soho](/img/soho.jpg)
+
+!SLIDE
+
+![evening weekends nyc](/img/godslove.jpg)

@@ -1,6 +1,7 @@
 {
-  "title": "Stream of Consciousness",
-  "sections": [
-    "intro"
-  ]
+    "title": "Stream of Consciousness",
+    "sections": [
+        "intro",
+        "arch"
+    ]
 }
