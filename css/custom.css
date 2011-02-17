@@ -17,4 +17,6 @@ div#ticker span {
 
 body {
     overflow: hidden;
+    font-family: "URW Gothic L", Helvetica, sans-serif;
+    padding-top: 15px;
 }
