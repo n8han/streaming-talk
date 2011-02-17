@@ -10,3 +10,11 @@ HOWTO: serve live data
 !SLIDE
 
 ![after](/img/after.svg)
+
+!SLIDE
+
+![fan](/img/fan.jpg)
+
+!SLIDE
+
+![after](/img/after.svg)

@@ -2,6 +2,7 @@
     "title": "Stream of Consciousness",
     "sections": [
         "intro",
-        "arch"
+        "arch",
+        "tour"
     ]
 }
