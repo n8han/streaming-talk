@@ -8,10 +8,8 @@ $(function() {
   
     socket.onmessage = function(event) {
         var rsvp = JSON.parse(event.data);
-        var span = $(["<span>", rsvp.group.group_name, "</span>"].join(""));
+        var span = $(["<div><span>", rsvp.group.group_name, "</span></div>"].join(""));
         ticker.append(span);
-        ticker.animate({ 
-            left: "-=" + span.width()
-        }, 2000);
+        span.animate({ width: 'show' }, 2000);
     };
 });

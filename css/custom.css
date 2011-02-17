@@ -4,19 +4,27 @@ div#ticker {
     position: absolute;
     font-size: .4em;
     top: .25em;
-    left: 2000px;
+    right: 0;
     text-align: right;
     color: gray;
     overflow: hidden;
     white-space: nowrap;
 }
 
-div#ticker span {
-    margin-left: 2em;
+div#ticker div {
+    display: none;
+    float: left;
+}
+
+div#ticker div span {
+    padding-right: 2em;
 }
 
 body {
     overflow: hidden;
     font-family: "URW Gothic L", Helvetica, sans-serif;
-    padding-top: 15px;
+}
+
+#slides .content .container {
+    padding-top: 40px;
 }
