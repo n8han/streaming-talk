@@ -26,17 +26,14 @@
               ...
 
 !SLIDE
-
-    import net.liftweb.json._
-    import JsonAST._
-    import JsonDSL._
-    for ( JField("mtime", JInt(mtime)) <- 
-            JsonParser.parse(new String(body, charset)) )
-      buffer.synchronized { 
-        buffer = buffer.enqueue((mtime.toLong, body))
-        if (buffer.length > BUFFER_SIZE)
-          buffer = buffer.tail
-      }
+              ...
+              val js = JsonParser.parse(new String(body, charset))
+              for (JField("mtime", JInt(mtime)) <- js)
+                buffer.synchronized { 
+                  buffer = buffer.enqueue((mtime.toLong, body))
+                  if (buffer.length > BUFFER_SIZE)
+                    buffer = buffer.tail
+                }
 
 !SLIDE
 
@@ -130,7 +127,7 @@
           + "</span></div>");
         ticker.append(span);
         span.animate({ width: 'show' }, 1000);
-        };
+      };
     });
 
 !SLIDE
