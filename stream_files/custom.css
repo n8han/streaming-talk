@@ -1,0 +1,30 @@
+/* custom styles */
+
+div#ticker {
+    position: absolute;
+    font-size: .4em;
+    top: .25em;
+    right: 0;
+    text-align: right;
+    color: gray;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+div#ticker div {
+    display: none;
+    float: left;
+}
+
+div#ticker div span {
+    padding-right: 2em;
+}
+
+body {
+    overflow: hidden;
+    font-family: "URW Gothic L", Helvetica, sans-serif;
+}
+
+#slides .content .container {
+    padding-top: 45px;
+}

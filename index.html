@@ -1,0 +1,179 @@
+
+<!-- saved from url=(0024)http://127.0.0.1:3000/#0 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <title>Stream of Consciousness</title>
+        <link href="./stream_files/show.css" type="text/css" rel="stylesheet">
+        <script type="text/javascript" src="./stream_files/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="./stream_files/show.js"></script>
+        <link href="./stream_files/custom.css" type="text/css" rel="stylesheet">
+      </head>
+      <body>
+        <div id="instructions" style="display: none; ">
+          arrow ← to go left, arrow → to go right
+        </div>
+        <div id="slides" style="height: 531px; width: 1023px; ">
+        <div id="reel" style="margin-left: 0px; ">
+          <div class="content" id="slide-0" style="height: 531px; width: 1023px; ">
+       <div class="container"><h1></h1><h1>Stream of Consciousness</h1></div>
+      </div><div class="content" id="slide-1" style="height: 531px; width: 1023px; ">
+       <div class="container"><p><img src="./stream_files/facebook.jpg" alt="facebook">
+</p></div>
+      </div><div class="content" id="slide-2" style="height: 531px; width: 1023px; ">
+       <div class="container"><p><img src="./stream_files/twitter.jpg" alt="twitter">
+</p></div>
+      </div><div class="content" id="slide-3" style="height: 531px; width: 1023px; ">
+       <div class="container"><p><img src="./stream_files/blackberry.jpg" alt="blackberry">
+</p></div>
+      </div><div class="content" id="slide-4" style="height: 531px; width: 1023px; ">
+       <div class="container"><p><img src="./stream_files/aljazeera.png" alt="aljazeera">
+</p></div>
+      </div><div class="content" id="slide-5" style="height: 531px; width: 1023px; ">
+       <div class="container"><p><img src="./stream_files/soho.jpg" alt="soho">
+</p></div>
+      </div><div class="content" id="slide-6" style="height: 531px; width: 1023px; ">
+       <div class="container"><p><img src="./stream_files/godslove.jpg" alt="evening weekends nyc">
+</p></div>
+      </div><div class="content" id="slide-7" style="height: 531px; width: 1023px; ">
+       <div class="container"><h2>HOWTO: serve live data</h2></div>
+      </div><div class="content" id="slide-8" style="height: 531px; width: 1023px; ">
+       <div class="container"><p><img src="./stream_files/before.svg" alt="before">
+</p></div>
+      </div><div class="content" id="slide-9" style="height: 531px; width: 1023px; ">
+       <div class="container"><p><img src="./stream_files/after.svg" alt="after">
+</p></div>
+      </div><div class="content" id="slide-10" style="height: 531px; width: 1023px; ">
+       <div class="container"><p><img src="./stream_files/fan.jpg" alt="fan">
+</p></div>
+      </div><div class="content" id="slide-11" style="height: 531px; width: 1023px; ">
+       <div class="container"><p><img src="./stream_files/after.svg" alt="after">
+</p></div>
+      </div><div class="content" id="slide-12" style="height: 531px; width: 1023px; ">
+       <div class="container"><p><img src="./stream_files/tower.jpg" alt="tower">
+</p></div>
+      </div><div class="content" id="slide-13" style="height: 531px; width: 1023px; ">
+       <div class="container"><pre><code>jobPublisher.publish(Message.fromCallableString(
+  new Callable&lt;String&gt;() {
+    public String call() throws Exception {
+      return jsonize(rsvp, mem, chapter, event);
+    }
+  }
+));
+</code></pre></div>
+      </div><div class="content" id="slide-14" style="height: 531px; width: 1023px; ">
+       <div class="container"><pre><code>object Server {
+  lazy val consumer: MessageQueue.MessageConsumer =
+    queue.getAsyncConsumer(
+      new MessageReceivedListener {
+        def messageReceived(msg: MessageQueue.Message)={
+          val charset = "utf-8";
+          val body = msg.getPayload.
+              asInstanceOf[String].getBytes(charset)
+          channels.foreach { _.write(body) }
+          ...
+</code></pre></div>
+      </div><div class="content" id="slide-15" style="height: 531px; width: 1023px; ">
+       <div class="container"><pre><code>          ...
+          val js = JsonParser.parse(new String(body, charset))
+          for (JField("mtime", JInt(mtime)) &lt;- js)
+            buffer.synchronized { 
+              buffer = buffer.enqueue((mtime.toLong, body))
+              if (buffer.length &gt; BUFFER_SIZE)
+                buffer = buffer.tail
+            }
+</code></pre></div>
+      </div><div class="content" id="slide-16" style="height: 531px; width: 1023px; ">
+       <div class="container"><pre><code>import scala.collection.immutable.Queue
+private var buffer = Queue.empty[(Long, Array[Byte])]
+</code></pre></div>
+      </div><div class="content" id="slide-17" style="height: 531px; width: 1023px; ">
+       <div class="container"><pre><code>def main(args: Array[String]) {
+  ...
+  consumer // touch lazy value, try to connect
+  unfiltered.netty.Http(port)
+    .handler(plan.WebSockets.Rsvps)
+    .handler(plan.Http)
+    .beforeStop {
+      shutdown()
+    }
+    .run()
+</code></pre></div>
+      </div><div class="content" id="slide-18" style="height: 531px; width: 1023px; ">
+       <div class="container"><pre><code>object Http extends unfiltered.netty.channel.Plan {
+  def intent = {
+    case req @ GET(Path("/2/rsvps") &amp; 
+               Params(params) &amp; RemoteAddr(client_ip)) =&gt;
+</code></pre></div>
+      </div><div class="content" id="slide-19" style="height: 531px; width: 1023px; ">
+       <div class="container"><pre><code>val expected = for {
+  since_id &lt;- lookup("since_mtime") is 
+    long { _ + " is not an integer" } is 
+    optional
+} yield {
+</code></pre></div>
+      </div><div class="content" id="slide-20" style="height: 531px; width: 1023px; ">
+       <div class="container"><pre><code>} yield {
+  val initial = req.underlying.defaultResponse(
+    Connection(HttpHeaders.Values.CLOSE) ~&gt;
+    TransferEncoding(HttpHeaders.Values.CHUNKED) ~&gt; 
+    JsonContent
+  )
+</code></pre></div>
+      </div><div class="content" id="slide-21" style="height: 531px; width: 1023px; ">
+       <div class="container"><pre><code>  val ch = req.underlying.event.getChannel
+  ch.write(initial).addListener { () =&gt;
+    Server.addRsvpClient(group, 
+                         ch, 
+                         ip_addr = client_ip, 
+                         user_agent = user_agent)
+    since_id.get.foreach { id =&gt; backfillRsvps(ch, id) }
+  }
+</code></pre></div>
+      </div><div class="content" id="slide-22" style="height: 531px; width: 1023px; ">
+       <div class="container"><pre><code>def backfillRsvps(ch: Channel, since_mtime: Long) {
+  Server.bufferSince(since_mtime).foreach { 
+    case (_, body) =&gt;
+      ch.write(new DefaultHttpChunk(
+        ChannelBuffers.copiedBuffer(body))
+      )
+  }
+}
+</code></pre></div>
+      </div><div class="content" id="slide-23" style="height: 531px; width: 1023px; ">
+       <div class="container"><pre><code>def bufferSince(atime: Long) = buffer.dropWhile { 
+  case (mtime, _) =&gt; mtime &lt;= atime 
+}
+</code></pre></div>
+      </div><div class="content" id="slide-24" style="height: 531px; width: 1023px; ">
+       <div class="container"><pre><code>$(function() {
+  var socket = new WebSocket(
+    "ws://stream.meetup.com/2/rsvps");
+
+  var ticker = $('&lt;div id="ticker"/&gt;');
+  $(document.body).append(ticker);
+
+  socket.onmessage = function(event) {
+    var rsvp = JSON.parse(event.data);
+</code></pre></div>
+      </div><div class="content" id="slide-25" style="height: 531px; width: 1023px; ">
+       <div class="container"><pre><code>    if (rsvp.response != "yes")
+      return;
+    var span = $("&lt;div&gt;&lt;span&gt;" 
+      + rsvp.group.group_name 
+      + "&lt;/span&gt;&lt;/div&gt;");
+    ticker.append(span);
+    span.animate({ width: 'show' }, 1000);
+  };
+});
+</code></pre></div>
+      </div><div class="content" id="slide-26" style="height: 531px; width: 1023px; ">
+       <div class="container"><img src="./stream_files/after.svg" alt="after"/><a href="http://www.meetup.com/meetup_api/docs/stream/2/rsvps/">RSVPs Stream</a>
+</p></div>
+      </div>
+        </div>
+       </div>
+       <script type="text/javascript" src="./stream_files/custom.js"></script>
+      
+     </body>
+
+</html>
